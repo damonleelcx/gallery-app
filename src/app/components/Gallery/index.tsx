@@ -62,9 +62,26 @@ export default function Gallery() {
   };
 
   const handleClose = () => {
-    router.push('');
+    // Use window.history.back() to properly handle the back navigation
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      router.replace('/', { scroll: false });
+    }
     close();
   };
+
+  // Add cleanup effect to handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      if (!searchParams.get('media')) {
+        close();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [close]);
 
   const handleNavigate = (id: string) => {
     router.push(`?media=${id}`);
