@@ -11,7 +11,7 @@ interface GalleryItemProps {
 export default function GalleryItem({ item, onClick, onLike }: GalleryItemProps) {
   return (
     <div 
-      className="relative group cursor-pointer overflow-hidden rounded-lg"
+      className="relative group cursor-pointer overflow-hidden rounded-lg break-inside-avoid block"
       onClick={onClick}
     >
       <div className="relative w-full">

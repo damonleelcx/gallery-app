@@ -31,7 +31,7 @@ export default function GalleryGrid({
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 auto-rows-auto">
+      <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4">
         {items.map((item) => (
           <GalleryItem
             key={item.id}
