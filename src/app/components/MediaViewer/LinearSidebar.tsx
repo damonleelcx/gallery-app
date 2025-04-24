@@ -13,7 +13,7 @@ export default function LinearSidebar({
   onNavigate,
 }: LinearSidebarProps) {
   return (
-    <div className="hidden md:block bg-black bg-opacity-50 h-[80vh] overflow-y-auto py-2 w-20">
+    <div className="hidden md:block bg-black bg-opacity-50 h-full overflow-y-auto py-2 w-20">
       <div className="flex flex-col items-center space-y-2">
         {items.map((item) => (
           <div 
