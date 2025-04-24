@@ -11,15 +11,16 @@ interface GalleryItemProps {
 export default function GalleryItem({ item, onClick, onLike }: GalleryItemProps) {
   return (
     <div 
-      className="relative group cursor-pointer overflow-hidden rounded-lg aspect-square"
+      className="relative group cursor-pointer overflow-hidden rounded-lg"
       onClick={onClick}
     >
-      <div className="relative w-full h-full">
+      <div className="relative w-full">
         <Image
           src={item.thumbnailUrl}
           alt={item.prompt || ''}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          width={400}
+          height={0}
+          className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         
