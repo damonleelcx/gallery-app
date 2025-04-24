@@ -11,10 +11,10 @@ interface GalleryItemProps {
 export default function GalleryItem({ item, onClick, onLike }: GalleryItemProps) {
   return (
     <div 
-      className="relative group cursor-pointer overflow-hidden rounded-lg"
+      className="relative group cursor-pointer overflow-hidden rounded-lg aspect-square"
       onClick={onClick}
     >
-      <div className="aspect-square md:aspect-auto relative overflow-hidden">
+      <div className="relative w-full h-full">
         <Image
           src={item.thumbnailUrl}
           alt={item.prompt || ''}
