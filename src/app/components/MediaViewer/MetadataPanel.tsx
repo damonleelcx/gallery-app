@@ -28,7 +28,7 @@ export default function MetadataPanel({ item, onLike }: MetadataPanelProps) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg w-full max-w-md max-h-[80vh] overflow-y-auto">
+    <div className="bg-white p-6 rounded-lg w-full max-w-md max-h-[80vh] overflow-y-auto relative z-[65] mt-20">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">{item.author}</h2>
         <LikeButton

@@ -23,7 +23,7 @@ const getRandomElements = (arr: string[], count: number) => {
 // Create mock data
 export const mockMediaItems: MediaItem[] = [
   // Images
-  ...Array.from({ length: 20 }, (_, i) => ({
+  ...Array.from({ length: 100 }, (_, i) => ({
     id: `img-${i + 1}`,
     thumbnailUrl: `/sample-data/images/thumbnail-${(i % 10) + 1}.jpg`,
     mediaUrl: `/sample-data/images/full-${(i % 10) + 1}.jpg`,
@@ -36,7 +36,7 @@ export const mockMediaItems: MediaItem[] = [
   })),
   
   // Videos
-  ...Array.from({ length: 10 }, (_, i) => ({
+  ...Array.from({ length: 100 }, (_, i) => ({
     id: `vid-${i + 1}`,
     thumbnailUrl: `/sample-data/videos/poster-${(i % 5) + 1}.jpg`,
     mediaUrl: `/sample-data/videos/video-${(i % 5) + 1}.mp4`,

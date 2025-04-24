@@ -44,7 +44,7 @@ export default function FullScreenOverlay({
       }}
     >
       <button
-        className="absolute top-4 right-4 text-white p-2 hover:bg-gray-800 rounded-full z-10"
+        className="absolute top-4 right-4 text-white p-2 hover:bg-gray-800 rounded-full z-[70]"
         onClick={onClose}
         aria-label="Close"
       >
