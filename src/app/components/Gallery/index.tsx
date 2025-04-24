@@ -55,7 +55,7 @@ export default function Gallery() {
         error={error}
         onItemClick={open}
         onItemLike={handleItemLike}
-        loadingRef={loadingRef}
+        loadingRef={loadingRef as React.RefObject<HTMLDivElement>}
       />
       
       {isOpen && (
