@@ -14,6 +14,7 @@ export function useMediaViewer(initialItems: MediaItem[] = []) {
 
   const close = () => {
     setIsOpen(false);
+    setActiveItemId(null); // Reset the active item when closing the viewer
   };
 
   const navigateToItem = (id: string) => {

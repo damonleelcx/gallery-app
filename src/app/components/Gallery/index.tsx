@@ -1,3 +1,4 @@
+import { mockMediaItems } from "@/mock-data";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
@@ -17,7 +18,7 @@ function GalleryContent() {
     error,
     loadingRef,
     updateItemLikes,
-    loadMoreItems,
+    setItems,
   } = useInfiniteScroll();
 
   const {
@@ -53,21 +54,30 @@ function GalleryContent() {
 
   // Keep track of pending media ID
   useEffect(() => {
-    if (mediaId) {
-      const targetItem = items.find(item => item.id === mediaId);
+    if (mediaId && !isOpen) {
+      const targetItem = items.find((item) => item.id === mediaId);
       if (targetItem) {
         // If we have the item, open it immediately
         open(mediaId);
-      } else if (!isLoading) {
-        // If we don't have the item and we're not loading, load more items
-        loadMoreItems();
+      } else {
+        // Instead of loading more items, find it directly from mock data
+        const mockItem = mockMediaItems.find((item) => item.id === mediaId);
+        if (mockItem) {
+          // Add the found item to our items array
+          setItems(prevItems => [...prevItems, mockItem]);
+          open(mediaId);
+        }
       }
+    } else if (!mediaId && isOpen) {
+      // If we don't have a media ID but the viewer is open, close it
+      close();
     }
-  }, [mediaId, items, open, isLoading, loadMoreItems]);
+  }, [mediaId, items, open, isOpen, close, setItems]);
 
   const handleClose = () => {
-    router.replace("/", { scroll: false });
     close();
+    router.push("/", { scroll: false });
+    // Use push instead of replace to ensure the URL change triggers after the close
   };
 
   // Add cleanup effect to handle browser back/forward navigation
