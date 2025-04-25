@@ -72,5 +72,6 @@ export function useInfiniteScroll() {
     hasMore,
     loadingRef,
     updateItemLikes,
+    loadMoreItems, // Add this to the returned object
   };
 }

@@ -11,8 +11,14 @@ function GalleryContent() {
   const searchParams = useSearchParams();
   const mediaId = searchParams.get("media");
 
-  const { items, isLoading, error, loadingRef, updateItemLikes } =
-    useInfiniteScroll();
+  const {
+    items,
+    isLoading,
+    error,
+    loadingRef,
+    updateItemLikes,
+    loadMoreItems,
+  } = useInfiniteScroll();
 
   const {
     isOpen,
@@ -46,10 +52,16 @@ function GalleryContent() {
   };
 
   useEffect(() => {
-    if (mediaId && items.length > 0) {
-      open(mediaId);
+    if (mediaId) {
+      if (items.length > 0) {
+        open(mediaId);
+      } else if (!isLoading) {
+        // If there are no items and we're not currently loading,
+        // trigger a load
+        loadMoreItems();
+      }
     }
-  }, [mediaId, items, open]);
+  }, [mediaId, items, open, isLoading, loadMoreItems]);
 
   const handleClose = () => {
     router.replace("/", { scroll: false });
