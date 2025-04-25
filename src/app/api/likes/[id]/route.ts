@@ -1,11 +1,11 @@
+import { mockMediaItems } from '@/mock-data';
 import { NextRequest, NextResponse } from 'next/server';
-import { mockMediaItems } from '../../../../mock-data';
 
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const id = params.id;
+  const { id } = await params;
   const { increment } = await request.json();
   
   const itemIndex = mockMediaItems.findIndex(item => item.id === id);
