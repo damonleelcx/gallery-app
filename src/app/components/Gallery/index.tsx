@@ -1,24 +1,19 @@
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
-import { useMediaViewer } from '../../hooks/useMediaViewer';
-import { updateLikes } from '../../lib/api';
-import MediaViewer from '../MediaViewer';
-import GalleryGrid from './GalleryGrid';
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useMediaViewer } from "../../hooks/useMediaViewer";
+import { updateLikes } from "../../lib/api";
+import MediaViewer from "../MediaViewer";
+import GalleryGrid from "./GalleryGrid";
 
 export default function Gallery() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const mediaId = searchParams.get('media');
-  
-  const {
-    items,
-    isLoading,
-    error,
-    loadingRef,
-    updateItemLikes,
-  } = useInfiniteScroll();
-  
+  const mediaId = searchParams.get("media");
+
+  const { items, isLoading, error, loadingRef, updateItemLikes } =
+    useInfiniteScroll();
+
   const {
     isOpen,
     activeItem,
@@ -30,88 +25,85 @@ export default function Gallery() {
     items: viewerItems,
     updateItems,
   } = useMediaViewer();
-  
+
   // Sync items from infinite scroll to viewer
   useEffect(() => {
     if (items.length > 0) {
       updateItems(items);
     }
   }, [items, updateItems]);
-  
+
   const handleItemLike = async (id: string) => {
     try {
-      const item = items.find(item => item.id === id);
+      const item = items.find((item) => item.id === id);
       if (!item) return;
-      
+
       const updatedItem = await updateLikes(id, true);
       updateItemLikes(id, updatedItem.likes);
     } catch (error) {
-      console.error('Error liking item:', error);
+      console.error("Error liking item:", error);
     }
   };
-  
+
   useEffect(() => {
     if (mediaId && items.length > 0) {
       open(mediaId);
     }
   }, [mediaId, items]);
 
-  const handleOpen = (id: string) => {
-    router.push(`?media=${id}`);
-    open(id);
-  };
-
   const handleClose = () => {
-    // Use window.history.back() to properly handle the back navigation
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      router.replace('/', { scroll: false });
-    }
+    router.replace("/", { scroll: false });
     close();
   };
 
   // Add cleanup effect to handle browser back/forward navigation
   useEffect(() => {
     const handlePopState = () => {
-      if (!searchParams.get('media')) {
+      if (!searchParams.get("media")) {
         close();
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, [close]);
 
   const handleNavigate = (id: string) => {
-    router.push(`?media=${id}`);
+    router.replace(`?media=${id}`, { scroll: false });
     navigateToItem(id);
   };
 
   const handleNext = () => {
     if (!activeItem) return;
-    const currentIndex = items.findIndex(item => item.id === activeItem.id);
+    const currentIndex = items.findIndex((item) => item.id === activeItem.id);
     if (currentIndex < items.length - 1) {
       const nextId = items[currentIndex + 1].id;
-      router.push(`?media=${nextId}`);
+      router.replace(`?media=${nextId}`, { scroll: false });
       navigateNext();
     }
   };
 
   const handlePrevious = () => {
     if (!activeItem) return;
-    const currentIndex = items.findIndex(item => item.id === activeItem.id);
+    const currentIndex = items.findIndex((item) => item.id === activeItem.id);
     if (currentIndex > 0) {
       const prevId = items[currentIndex - 1].id;
-      router.push(`?media=${prevId}`);
+      router.replace(`?media=${prevId}`, { scroll: false });
       navigatePrevious();
     }
   };
 
+  const handleOpen = (id: string) => {
+    router.push(`?media=${id}`, { scroll: false });
+    open(id);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Public Mini Gallery</h1>
-      
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Public Mini Gallery
+      </h1>
+
       <GalleryGrid
         items={items}
         isLoading={isLoading}
@@ -120,7 +112,7 @@ export default function Gallery() {
         onItemLike={handleItemLike}
         loadingRef={loadingRef as React.RefObject<HTMLDivElement>}
       />
-      
+
       {isOpen && (
         <MediaViewer
           isOpen={isOpen}
