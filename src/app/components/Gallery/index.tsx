@@ -51,13 +51,15 @@ function GalleryContent() {
     }
   };
 
+  // Keep track of pending media ID
   useEffect(() => {
     if (mediaId) {
-      if (items.length > 0) {
+      const targetItem = items.find(item => item.id === mediaId);
+      if (targetItem) {
+        // If we have the item, open it immediately
         open(mediaId);
       } else if (!isLoading) {
-        // If there are no items and we're not currently loading,
-        // trigger a load
+        // If we don't have the item and we're not loading, load more items
         loadMoreItems();
       }
     }
