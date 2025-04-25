@@ -1,12 +1,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { useMediaViewer } from "../../hooks/useMediaViewer";
 import { updateLikes } from "../../lib/api";
 import MediaViewer from "../MediaViewer";
 import GalleryGrid from "./GalleryGrid";
 
-export default function Gallery() {
+function GalleryContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mediaId = searchParams.get("media");
@@ -126,5 +126,13 @@ export default function Gallery() {
         />
       )}
     </div>
+  );
+}
+
+export default function Gallery() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GalleryContent />
+    </Suspense>
   );
 }
