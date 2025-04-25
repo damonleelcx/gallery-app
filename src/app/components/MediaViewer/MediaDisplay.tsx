@@ -30,7 +30,7 @@ if (direction === 'next') {
     <div className="relative flex items-center justify-center w-full h-full">
       {hasPrevious && (
         <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 z-10"
           onClick={(e) => handleNavigation(e, 'previous')}
           aria-label="Previous"
         >
@@ -66,7 +66,7 @@ if (direction === 'next') {
 
       {hasNext && (
         <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 z-10"
           onClick={(e) => handleNavigation(e, 'next')}
           aria-label="Next"
         >
