@@ -49,7 +49,7 @@ export default function Gallery() {
     if (mediaId && items.length > 0) {
       open(mediaId);
     }
-  }, [mediaId, items]);
+  }, [mediaId, items, open]);
 
   const handleClose = () => {
     router.replace("/", { scroll: false });
@@ -66,7 +66,7 @@ export default function Gallery() {
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, [close]);
+  }, [close, searchParams]);
 
   const handleNavigate = (id: string) => {
     router.replace(`?media=${id}`, { scroll: false });

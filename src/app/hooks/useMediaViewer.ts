@@ -38,7 +38,7 @@ export function useMediaViewer(initialItems: MediaItem[] = []) {
     }
   };
 
-  const toggleLike = async (id: string, currentLikes: number) => {
+  const toggleLike = async (id: string) => {
     try {
       const updatedItem = await updateLikes(id, true);
       setItems(prevItems => 
