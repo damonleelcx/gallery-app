@@ -51,7 +51,7 @@ export default function MediaViewer({
             />
           </div>
           
-          <div className="md:w-96">
+          <div className="md:w-96 flex justify-center md:justify-start">
             <MetadataPanel
               item={activeItem}
               onLike={() => onLike(activeItem.id)}
