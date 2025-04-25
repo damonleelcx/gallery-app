@@ -40,8 +40,8 @@ export default function MediaViewer({
           onNavigate={onNavigate}
         />
         
-        <div className="flex-1 flex flex-col md:flex-row">
-          <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-y-hidden">
+          <div className="flex-1 flex items-center justify-center min-h-[50vh] md:min-h-full">
             <MediaDisplay
               item={activeItem}
               onNext={onNext}

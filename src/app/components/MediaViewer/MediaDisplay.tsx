@@ -19,7 +19,11 @@ export default function MediaDisplay({
 }: MediaDisplayProps) {
   const handleNavigation = (e: React.MouseEvent, direction: 'next' | 'previous') => {
     e.stopPropagation();
-    direction === 'next' ? onNext() : onPrevious();
+if (direction === 'next') {
+  onNext();
+} else {
+  onPrevious();
+}
   };
 
   return (
