@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { useMediaViewer } from "../../hooks/useMediaViewer";
-import { updateLikes } from "../../lib/api";
+import { updateLikes,fetchMediaItem } from "../../lib/api";
 import MediaViewer from "../MediaViewer";
 import GalleryGrid from "./GalleryGrid";
 
@@ -61,7 +61,8 @@ function GalleryContent() {
         open(mediaId);
       } else {
         // Instead of loading more items, find it directly from mock data
-        const mockItem = mockMediaItems.find((item) => item.id === mediaId);
+        const mockItem = await fetchMediaItem(mediaId);
+
         if (mockItem) {
           // Add the found item to our items array
           setItems(prevItems => [...prevItems, mockItem]);
