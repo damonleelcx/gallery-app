@@ -1,9 +1,8 @@
-import { mockMediaItems } from "@/mock-data";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { useMediaViewer } from "../../hooks/useMediaViewer";
-import { updateLikes } from "../../lib/api";
+import { fetchMediaItem, updateLikes } from "../../lib/api";
 import MediaViewer from "../MediaViewer";
 import GalleryGrid from "./GalleryGrid";
 
@@ -12,14 +11,8 @@ function GalleryContent() {
   const searchParams = useSearchParams();
   const mediaId = searchParams.get("media");
 
-  const {
-    items,
-    isLoading,
-    error,
-    loadingRef,
-    updateItemLikes,
-    setItems,
-  } = useInfiniteScroll();
+  const { items, isLoading, error, loadingRef, updateItemLikes, setItems } =
+    useInfiniteScroll();
 
   const {
     isOpen,
@@ -61,12 +54,16 @@ function GalleryContent() {
         open(mediaId);
       } else {
         // Instead of loading more items, find it directly from mock data
-        const mockItem = mockMediaItems.find((item) => item.id === mediaId);
-        if (mockItem) {
-          // Add the found item to our items array
-          setItems(prevItems => [...prevItems, mockItem]);
-          open(mediaId);
-        }
+        const fetchData = async () => {
+          const mockItem = await fetchMediaItem(mediaId);
+          if (mockItem) {
+            // Add the found item to our items array
+            setItems((prevItems) => [...prevItems, mockItem]);
+            open(mediaId);
+          }
+        };
+
+        fetchData();
       }
     } else if (!mediaId && isOpen) {
       // If we don't have a media ID but the viewer is open, close it
